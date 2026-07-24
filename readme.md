@@ -188,6 +188,8 @@ class SomeCommand extends Command
 }
 ```
 
+Таким образом исключается задержка прохождения запроса через Redis и MessageBus.
+
 ## Доступные команды (SnmpBoxRequest::setCommand)
 * `walk` — последовательное чтение дерева OID.
 * `get` — получение конкретного значения OID.
