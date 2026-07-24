@@ -127,7 +127,24 @@ class SomeController extends AbstractController
 php bin/console messenger:consume
 ```
 
-Рекомендуется использовать Supervisor для работы Handler-а.
+Для запуска Handler создаёте в своём приложении файл SnmpBoxRequestHandler.php со следующим содержимым:
+
+```php
+<?php
+declare(strict_types=1);
+
+namespace App\MessageHandler;
+
+use terr17216\snmpbox\SnmpBoxHandler;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+
+#[AsMessageHandler]
+class SnmpBoxRequestHandler extends SnmpBoxHandler
+{
+}
+```
+
+Рекомендуется использовать Supervisor (https://supervisord.org/) для работы Handler-а.
 
 ### 4. Использование в командах
 
