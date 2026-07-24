@@ -21,6 +21,6 @@
     "symfony/messenger": "^7.0",
     "symfony/process": "^7.0",
     "symfony/uid": "^7.0",
-    "willdurand/nmap": "^3.0"
+    "willdurand/nmap": "^0.5.0"
   }
 }
