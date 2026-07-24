@@ -1,0 +1,26 @@
+# Зависимости Composer (папка vendor не должна быть в репозитории библиотеки)
+/vendor/
+composer.lock
+
+# Локальные настройки и кэш IDE (JetBrains / PHPStorm, VS Code)
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Локальные файлы конфигурации (если появятся)
+.env
+.env.local
+.env.*.local
+
+# Кэш, логи и временные файлы системы
+.phpunit.result.cache
+.php-cs-fixer.cache
+humbug.json
+infection.json
+text_requests.log
+.DS_Store
+Thumbs.db
