@@ -27,6 +27,15 @@ sudo apt install snmp nmap
 composer require terr17216/snmpbox
 ```
 
+Что бы транспорт обрабатывал запросы указываем в config/packages/messenger.yaml:
+
+```bash
+framework:
+    messenger:
+        routing:
+            'terr17216\snmpbox\SnmpBoxRequest': snmp_transport
+```
+
 ## Использование
 
 ### 1. Отправка запроса и получение результата в одном методе
