@@ -27,7 +27,7 @@ sudo apt install snmp nmap
 composer require terr17216/snmpbox
 ```
 
-Что бы транспорт обрабатывал запросы указываем в config/packages/messenger.yaml:
+Что бы транспорт обрабатывал запросы указываем в _config/packages/messenger.yaml_:
 
 ```bash
 framework:
@@ -199,11 +199,21 @@ class SomeCommand extends Command
 
 Таким образом исключается задержка прохождения запроса через Redis и MessageBus.
 
+### 5. Команда ping
+
+```php
+$request = (new SnmpBoxRequest())
+   ->setIpAddress('192.168.1.1')
+   ->setCommand('ping');
+```
+Другие параметры запроса будут проигнорированы
+
 ## Доступные команды (SnmpBoxRequest::setCommand)
 * `walk` — последовательное чтение дерева OID.
 * `get` — получение конкретного значения OID.
 * `set` — изменение параметров на оборудовании.
 * `checkTcpPort` — проверка доступности TCP-портов (использует утилиту `nmap`).
+* `ping` — пинг до устройства, 2 пакета.
 
 ## Доступные методы (SnmpBoxRequest)
 * `setOid()` — Добавляем массив OID для обработки.
