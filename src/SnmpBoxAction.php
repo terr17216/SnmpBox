@@ -66,6 +66,17 @@ class SnmpBoxAction
             } else {
                 $result->setIntResult(1);
             }
+        } elseif ($this->boxRequest->getCommand() === 'ping') {
+            $process = Process::fromShellCommandline('ping -c 2 -W 1 '.$this->boxRequest->getIpAddress().'');
+            $process->run();
+            if (!$process->isSuccessful()) {
+                $result->setError($process->getErrorOutput());
+                return $result;
+            }
+            $resultData = [];
+            $singleResult = [];
+            $success = $this->isPingSuccessful($process->getOutput());
+            $result->setStrResult($process->getOutput());
         }
 
         $result->setFullResult($resultData)->setResult($singleResult)->setSuccess($success);
@@ -89,6 +100,16 @@ class SnmpBoxAction
         $result->setExecutionTime(\round((\microtime(true) - $microTime), 2));
 
         return $result;
+    }
+
+    function isPingSuccessful(string $pingOutput): bool 
+    {
+        // Проверяем наличие успешной передачи без потерь
+        if (strpos($pingOutput, '0% packet loss') !== false) {
+            return true;
+        }
+        
+        return false;
     }
 
     private function getResult(string $requestOid, string $snmpResultSrc): array
