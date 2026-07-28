@@ -40,7 +40,10 @@ class SnmpBoxAction
                         return $result;
                     }
                     $oidResult = $this->getResult($oid, $process->getOutput());
-                    $singleResult = $oidResult[$oid];
+                    $singleResult = $oidResult[\array_key_first($oidResult)];
+                    if (\is_string($singleResult)) {
+                        $singleResult = [\array_key_first($oidResult) => $singleResult];
+                    }
                     $resultData += $oidResult;
                 } elseif ($this->boxRequest->getCommand() === 'checkTcpPort') {
                     $oidResult = $this->getCheckTcpPortResult((string) $oid);
@@ -115,7 +118,21 @@ class SnmpBoxAction
     private function getResult(string $requestOid, string $snmpResultSrc): array
     {
         $returnArray = [];
+        // Иногда получаем жуткую простыню из ответов типа Hex-STRING:, поэтому обрабатываем их отдельно
+        if (\preg_match('/Hex-STRING:/', $snmpResultSrc)) {
+            // Регулярное выражение для поиска OID и его значения
+            $pattern = '/(\.\d+(?:\.\d+)*)\s+=\s+Hex-STRING:\s+(.*?)(?=\s*(?:\.\d+(?:\.\d+)*\s+=\s+Hex-STRING:|$))/s';
 
+            if (preg_match_all($pattern, $snmpResultSrc, $matches, PREG_SET_ORDER)) {
+                foreach ($matches as $match) {
+                    $oid = $match[1];
+                    $hexData = trim($match[2]);
+                    $returnArray[$oid] = $hexData;
+                }
+            }
+            return [$requestOid => $returnArray];
+        }
+        
         foreach (\explode("\n", $snmpResultSrc) as $row) {
             $arrayResult = \explode(' = ', $row);
             if (\array_key_exists(0, $arrayResult) && \array_key_exists(1, $arrayResult)) {
@@ -216,13 +233,13 @@ class SnmpBoxAction
                 foreach ($this->boxRequest->getOid() as $oid) {
                     $pattern = '/^\.(?:\d+\.)*\d+$/';
                     if (is_string($oid)) {
-                        $targetOid = $oid;
+                        $targetOid = \trim($oid);
                     } elseif (\is_array($oid)) {
                         if (!\array_key_exists('oid', $oid)) {
                             $this->error = 'The snmp oid set as array, but oid key is not exists';
                             return false;
                         }
-                        $targetOid = $oid['oid'];
+                        $targetOid = \trim($oid['oid']);
                     }
                     if (!preg_match($pattern, $targetOid)) {
                         $this->error = 'The snmp oid ' . $targetOid . ' is not valid.';
