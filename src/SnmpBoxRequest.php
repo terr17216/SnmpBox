@@ -145,4 +145,9 @@ class SnmpBoxRequest
         $this->oid = \array_merge($this->oid, [$oid]);
         return $this;
     }
+    
+    public static function create(string $ip, string $snmpCommunity = '', string $command = 'walk', array $oid = []): SnmpBoxRequest
+    {
+        return new self()->setIpAddress($ip)->setSnmpCommunity($snmpCommunity)->setCommand($command)->setOid($oid);
+    }
 }
