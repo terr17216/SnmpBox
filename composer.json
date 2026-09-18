@@ -5,11 +5,7 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "terr17216\\snmpbox\\": "src/"
-    }
-  },
-  "autoload": {
-    "psr-4": {
+      "terr17216\\snmpbox\\": "src/",
       "terr17216\\snmpbox\\Tests\\": "test/"
     }
   },
