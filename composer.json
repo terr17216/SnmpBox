@@ -20,6 +20,6 @@
     "symfony/validator": "^7.0 || ^8.0",
     "symfony/messenger": "^7.0 || ^8.0",
     "symfony/process": "^7.0 || ^8.0",
-    "symfony/uid": "^7.0 || ^8.0",
+    "symfony/uid": "^7.0 || ^8.0"
   }
 }
