@@ -8,7 +8,7 @@
       "terr17216\\snmpbox\\": "src/"
     }
   },
-  "autoload-dev": {
+  "autoload": {
     "psr-4": {
       "terr17216\\snmpbox\\Tests\\": "test/"
     }
@@ -17,9 +17,10 @@
     "php": ">=8.4",
     "ext-redis": "*",
     "ext-json": "*",
-    "symfony/validator": "^7.0",
-    "symfony/messenger": "^7.0",
-    "symfony/process": "^7.0",
-    "symfony/uid": "^7.0"
+    "symfony/validator": "^7.0 || ^8.0",
+    "symfony/messenger": "^7.0 || ^8.0",
+    "symfony/process": "^7.0 || ^8.0",
+    "symfony/uid": "^7.0 || ^8.0",
+    "willdurand/nmap": "^3.0"
   }
 }
