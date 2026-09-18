@@ -57,11 +57,15 @@ $request = (new SnmpBoxRequest())
 // А можно и более коротко:    
 $request = SnmpBoxRequest::create('192.168.1.1', 'public', 'walk', ['.1.3.6.1.2.1.2.2.1.1', '.1.3.6.1.2.1.2.2.1.5']);
 
+// Получение данных с контроллеров через Redis
 // Передайте в конструктор клиента ваш Redis и Symfony MessageBus
 $snmpClient = new SnmpBoxClient(redisInstance, messageBus, request);
-
 // Отправка в очередь и ожидание результата
 $result = snmpClient->sendRequestAndGetResult();
+
+// Получение данных из Command - прямое взаимодействие
+$action = new SnmpBoxAction($request);
+$result = $action->execute();
 
 if (\$result->isSuccess()) {
     print_r(\$result->getFullResult());

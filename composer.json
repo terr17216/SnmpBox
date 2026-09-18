@@ -17,9 +17,9 @@
     "php": ">=8.4",
     "ext-redis": "*",
     "ext-json": "*",
-    "symfony/validator": "^7.0 || ^8",
-    "symfony/messenger": "^7.0 || ^8",
-    "symfony/process": "^7.0 || ^8",
-    "symfony/uid": "^7.0 || ^8",
+    "symfony/validator": "^7.0 || ^8.0",
+    "symfony/messenger": "^7.0 || ^8.0",
+    "symfony/process": "^7.0 || ^8.0",
+    "symfony/uid": "^7.0 || ^8.0",
   }
 }
