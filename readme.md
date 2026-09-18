@@ -54,6 +54,8 @@ $request = (new SnmpBoxRequest())
     ->setSnmpVersion(2)
     ->setSnmpCommunity('public')
     ->setOid(['.1.3.6.1.2.1.1.5', '.1.3.6.1.2.1.1.3']); // SysName and Uptime
+// А можно и более коротко:    
+$request = SnmpBoxRequest::create('192.168.1.1', 'public', 'walk', ['.1.3.6.1.2.1.2.2.1.1', '.1.3.6.1.2.1.2.2.1.5']);
 
 // Передайте в конструктор клиента ваш Redis и Symfony MessageBus
 $snmpClient = new SnmpBoxClient(redisInstance, messageBus, request);
